@@ -2,11 +2,32 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <link rel="stylesheet" href="{{ asset('css/bootstrap-4/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/fontawsome-5.all.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/projet.css') }}">
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        {% block javascripts %}
+            <script
+                    src="https://code.jquery.com/jquery-3.4.1.slim.js"
+                    integrity="sha256-BTlTdQO9/fascB1drekrDVkaKd9PkwBymMlHOiG+qLI="
+                    crossorigin="anonymous"></script>
+            <script>
+                $(function () {
+                    // Comportement du bouton de recherche
+                    $("#searchButton").click(
+                        function () {
+                            var searchString = $('#searchString').val().trim();
+                            location = ( '/{{ app.request.locale }}/boutique/chercher/' + encodeURI(searchString));
+                            return false;
+                        });
+                });
+            </script>
+        {% endblock %}
     </body>
+    <script src="{{ asset('js/jquery-3/jquery.slim.min.js') }}"></script> <!-- Jquery -->
+    <script src="{{ asset('js/bootstrap-4/bootstrap.min.js') }}"></script> <!-- Bootstrap -->
 </html>

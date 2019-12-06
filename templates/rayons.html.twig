@@ -1,0 +1,45 @@
+{# templates/rayons.html.twig #}
+{% extends "base.html.twig" %}
+
+{% block body %}
+    {% block navbar %}
+        {% include"navbar.html.twig" %}
+    {% endblock %}
+    {% block div %}
+        <main role="main" class="container">
+            <div class="main-div">
+                <!-- debut du block content !-->
+                <div class="row">
+                    <div class="alert alert-dark col-md-12">
+                        {% if recherche is defined %}
+                            <h1><i class="fab fa-product-hunt"></i>  {% trans %}Recherche {% endtrans %} "{{ recherche }}" / {{ produits |  length }}  {% trans %}Produit(s) {% endtrans %}</h1>
+                        {% else %}
+                            <h1><i class="fab fa-product-hunt"></i> {% trans %}Rayon{% endtrans %} {{ categorie.libelle }} / {{ produits |  length }} {% trans %}Produit(s){% endtrans %}</h1>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row">
+                    {% for produit in produits %}
+                        <div class="col-md-4">
+                            <div class="card clickable" onclick="location = ''"> {#{{ path('panier', { 'idProduit': produit.id }) }}#}
+                                <img src="{{ asset(produit.visuel) }}" class="card-img-produit" alt="Poire">
+                                <div class="card-body">
+                                    <h4 class="card-title">{{ produit.libelle }}</h4>
+                                    <p class="card-text"><i>{{ produit.texte }}</i></p>
+                                    <h2>
+                                        <span class="badge badge-primary">
+                                            <i class="fas fa-cart-plus"></i>
+                                            {{ produit.prix }} €
+                                        </span>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <!-- fin du block content !-->
+            </div>
+        </main>
+    {% endblock %}
+
+{% endblock %}

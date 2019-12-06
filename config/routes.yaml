@@ -1,3 +1,43 @@
 #index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+home_page:
+    path: /{_locale}
+    controller: App\Controller\DefaultController::index
+    requirements:
+        _locale: '%app.supported_locales%'
+    defaults:
+        _locale: fr
+contact:
+    path: /{_locale}/contact
+    controller:  App\Controller\DefaultController::contact
+    requirements:
+        _locale: '%app.supported_locales%'
+
+boutique:
+    path: /{_locale}/boutique
+    controller: App\Controller\BoutiqueController::index
+    requirements:
+        _locale: '%app.supported_locales%'
+
+chercher:
+    path: /{_locale}/boutique/chercher/{texte}
+    controller: App\Controller\BoutiqueController::chercher
+    requirements:
+        _locale: '%app.supported_locales%'
+    defaults:
+        texte: ""
+
+rayon:
+    path : /{_locale}/boutique/rayon/{idCategorie}
+    controller: App\Controller\BoutiqueController::rayon
+    requirements:
+        _locale: '%app.supported_locales%'
+
+panier_index:
+    path : /{_locale}/panier
+    controller: App\Controller\PanierController:index
+
+user:
+    path: /{_locale}/compte
+    controller: App\Controller\PanierController:index
+
+

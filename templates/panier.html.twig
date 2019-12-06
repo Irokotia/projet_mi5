@@ -1,0 +1,30 @@
+{# templates/rayons.html.twig #}
+{% extends "base.html.twig" %}
+
+{% block body %}
+    {% block navbar %}
+        {% include"navbar.html.twig" %}
+    {% endblock %}
+    {% block div %}
+        <main role="main" class="container">
+            <div class="main-div">
+                <!-- debut du block content !-->
+                <div class="row">
+                    <div class="alert alert-dark col-md-12">
+                        <h1>
+                            <i class="fas fa-shopping-cart"></i> 0 {% trans %}Produit(s){% endtrans %} :
+                            <b>0,00 €</b>
+                        </h1>
+                        <div class="col-md-12 btn-group btn-group-lg" role="group">
+                            <a class="btn btn-secondary" href="{{ path('boutique') }}">
+                                {% trans %}Continuer les Courses{% endtrans %}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- fin du block content !-->
+            </div>
+        </main>
+    {% endblock %}
+
+{% endblock %}
