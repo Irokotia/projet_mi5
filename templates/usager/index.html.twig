@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Usager index{% endblock %}
+
+{% block body %}
+    {% block navbar %}
+        {% include"navbar.html.twig" %}
+    {% endblock %}
+    {% block div %}
+        <h1>Usager info</h1>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prenom</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if usager is defined %}
+                <tr>
+                    {#<td>{{ usager.id }}</td>
+                    <td>{{ usager.email }}</td>
+                    <td>{{ usager.roles ? usager.roles|json_encode : '' }}</td>
+                    <td>{{ usager.password }}</td>#}
+                    <td>{{ usager.nom }}</td>
+                    <td>{{ usager.prenom }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7">no records found</td>
+                </tr>
+            {% endif %}
+            </tbody>
+        </table>
+    {% endblock %}
+{% endblock %}

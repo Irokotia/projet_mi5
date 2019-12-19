@@ -4,33 +4,41 @@
 namespace App\Controller;
 
 
+use App\Entity\Categorie;
+use App\Entity\Produit;
+use App\Service\PanierService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Service\BoutiqueService;
 
 class BoutiqueController extends AbstractController
 {
-    public function index(BoutiqueService $boutique) {
-        $categories = $boutique->findAllCategories();
+    public function index(PanierService $panierService) {
+
+        $database = $this->getDoctrine()->getManager();
+        $categories = $database->getRepository(Categorie::class)->findAll();
           return $this->render('boutique.html.twig', [
-              'categories' => $categories
+              'categories' => $categories,
+              'nbProduit' => $panierService->getNbProduits()
           ]);
  }
 
 
-    public function rayon($idCategorie,BoutiqueService $boutique){
-        $rayons = $boutique->findProduitsByCategorie($idCategorie);
-        $categorie = $boutique->findCategorieById($idCategorie);
+    public function rayon($idCategorie,PanierService $panierService){
+        $database = $this->getDoctrine()->getManager();
+        $categorie = $database->getRepository(Categorie::class)->find($idCategorie);
+        $produits = $categorie->getProduits();
         return $this->render('rayons.html.twig', [
-            'produits' => $rayons,
-            'categorie' => $categorie
+            'produits' => $produits,
+            'categorie' => $categorie,
+            'nbProduit' => $panierService->getNbProduits()
         ]);
     }
 
-    public function chercher($texte,BoutiqueService $boutique){
-        $produits = $boutique->findProduitsByLibelleOrTexte($texte);
+    public function chercher($texte,PanierService $panierService){
+        $produits =$this->getDoctrine()->getRepository(Produit::class)->findProduitsByLibelleOrTexte($texte);
         return $this->render('rayons.html.twig', [
             'produits' => $produits,
-            'recherche' => $texte
+            'recherche' => $texte,
+            'nbProduit' => $panierService->getNbProduits()
         ]);
     }
 }

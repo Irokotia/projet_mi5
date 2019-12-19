@@ -14,14 +14,14 @@
                         {% if recherche is defined %}
                             <h1><i class="fab fa-product-hunt"></i>  {% trans %}Recherche {% endtrans %} "{{ recherche }}" / {{ produits |  length }}  {% trans %}Produit(s) {% endtrans %}</h1>
                         {% else %}
-                            <h1><i class="fab fa-product-hunt"></i> {% trans %}Rayon{% endtrans %} {{ categorie.libelle }} / {{ produits |  length }} {% trans %}Produit(s){% endtrans %}</h1>
+                            <h1><i class="fab fa-product-hunt"></i> {% trans %}Rayon{% endtrans %} {{ categorie.libelle }} /  {% trans %}Produit(s){% endtrans %}</h1>
                         {% endif %}
                     </div>
                 </div>
                 <div class="row">
                     {% for produit in produits %}
                         <div class="col-md-4">
-                            <div class="card clickable" onclick="location = ''"> {#{{ path('panier', { 'idProduit': produit.id }) }}#}
+                            <div class="card clickable" onclick="location = '{{ path('panier_ajouter', { 'idProduit': produit.id, 'quantite':1}) }}'">
                                 <img src="{{ asset(produit.visuel) }}" class="card-img-produit" alt="Poire">
                                 <div class="card-body">
                                     <h4 class="card-title">{{ produit.libelle }}</h4>

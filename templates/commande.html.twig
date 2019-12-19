@@ -1,0 +1,24 @@
+{# templates/contact.html.twig #}
+{% extends "base.html.twig" %}
+
+{% block body %}
+    {% block navbar %}
+        {% include"navbar.html.twig" %}
+    {% endblock %}
+    {% block div %}
+        <main role="main" class="container">
+            <div class="main-div">
+                <!-- debut du block content !-->
+                <div class="row">
+                    <div class="alert alert-dark col-md-12">
+                        <h1><i class="fas fa-store"></i>  {% trans %}Commande {% endtrans %} {% trans %}numéro {% endtrans %} : {{ commande.id }}</h1>
+                    </div>
+                </div>
+                <div>
+                    Date de la commande : {{ commande.datecommande | date('d/m/Y H:I') }}
+                </div>
+                <!-- fin du block content !-->
+            </div>
+        </main>
+    {% endblock %}
+{% endblock %}
