@@ -9,7 +9,6 @@ use App\Entity\Produit;
 use App\Entity\Usager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use App\Service\BoutiqueService;
 // Service pour manipuler le panier et le stocker en session
 class PanierService
 {
@@ -20,10 +19,9 @@ class PanierService
     private $panier; // Tableau associatif idProduit => quantite
     // donc $this->panier[$i] = quantite du produit dont l'id = $i
     // constructeur du service
-    public function __construct(SessionInterface $session, BoutiqueService $boutique)
+    public function __construct(SessionInterface $session)
     {
-        // Récupération des services session et BoutiqueService
-        $this->boutique = $boutique;
+        // Récupération des services session
         $this->session = $session;
         // Récupération du panier en session s'il existe, init. à vide sinon
         $this->panier = $session->get(self::PANIER_SESSION, array());// initialisation du Panier
@@ -36,12 +34,12 @@ class PanierService
     }
 
     // getTotal renvoie le montant total du panier
-    public function getTotal()
+    public function getTotal(EntityManagerInterface $entityManager)
     {
         $total = 0.0;
         foreach($this->session->get(self::PANIER_SESSION) as $key => $value ){
-            $produitobj = $this->boutique->findProduitById($key);
-            $total += $value * $produitobj['prix'];
+            $produitobj = $entityManager->getRepository(Produit::class)->find($key);
+            $total += $value * $produitobj->getPrix();
         }
         return $total;
     }
@@ -49,7 +47,11 @@ class PanierService
     // getNbProduits renvoie le nombre de produits dans le panier
     public function getNbProduits()
     {
-        return count($this->session->get(self::PANIER_SESSION));
+        if(!empty($this->session->get(self::PANIER_SESSION))){
+            return count($this->session->get(self::PANIER_SESSION));
+        }else{
+            return 0;
+        }
     }
 
     // ajouterProduit ajoute au panier le produit $idProduit en quantite $quantite
@@ -109,7 +111,7 @@ class PanierService
                 $ligneCommande = new LigneCommande();
                 $ligneCommande->setProduit($produitobj);
                 $ligneCommande->setCommande($commande);
-                $ligneCommande->setPrix($produitobj->getPrix());
+                $ligneCommande->setPrix( ($produitobj->getPrix() * $value ));
                 $ligneCommande->setQuantite($value);
                 $entityManager->persist($ligneCommande);
                 $entityManager->flush();

@@ -11,34 +11,31 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class BoutiqueController extends AbstractController
 {
-    public function index(PanierService $panierService) {
+    public function index() {
 
         $database = $this->getDoctrine()->getManager();
         $categories = $database->getRepository(Categorie::class)->findAll();
           return $this->render('boutique.html.twig', [
-              'categories' => $categories,
-              'nbProduit' => $panierService->getNbProduits()
+              'categories' => $categories
           ]);
  }
 
 
-    public function rayon($idCategorie,PanierService $panierService){
+    public function rayon($idCategorie){
         $database = $this->getDoctrine()->getManager();
         $categorie = $database->getRepository(Categorie::class)->find($idCategorie);
         $produits = $categorie->getProduits();
         return $this->render('rayons.html.twig', [
             'produits' => $produits,
-            'categorie' => $categorie,
-            'nbProduit' => $panierService->getNbProduits()
+            'categorie' => $categorie
         ]);
     }
 
-    public function chercher($texte,PanierService $panierService){
+    public function chercher($texte){
         $produits =$this->getDoctrine()->getRepository(Produit::class)->findProduitsByLibelleOrTexte($texte);
         return $this->render('rayons.html.twig', [
             'produits' => $produits,
-            'recherche' => $texte,
-            'nbProduit' => $panierService->getNbProduits()
+            'recherche' => $texte
         ]);
     }
 }

@@ -14,7 +14,7 @@
                         {% if recherche is defined %}
                             <h1><i class="fab fa-product-hunt"></i>  {% trans %}Recherche {% endtrans %} "{{ recherche }}" / {{ produits |  length }}  {% trans %}Produit(s) {% endtrans %}</h1>
                         {% else %}
-                            <h1><i class="fab fa-product-hunt"></i> {% trans %}Rayon{% endtrans %} {{ categorie.libelle }} /  {% trans %}Produit(s){% endtrans %}</h1>
+                            <h1><i class="fab fa-product-hunt"></i> {% trans %}Rayon{% endtrans %} {{ categorie.libelle }} /  {{ produits | length }} {% trans %}Produit(s){% endtrans %}</h1>
                         {% endif %}
                     </div>
                 </div>

@@ -27,14 +27,13 @@
                 </div>
             </main>
         {% else %}
-            {{ dump(panier) }}
             <main role="main" class="container">
                 <div class="main-div">
                     <!-- debut du block content !-->
                     <div class="row">
                         <div class="alert alert-dark col-md-12">
                             <h1>
-                                <i class="fas fa-shopping-cart"></i> {{ nbProduit }} Produit(s) :
+                                <i class="fas fa-shopping-cart"></i> {{ render(controller('App\\Controller\\DefaultController::navBar')) }} Produit(s) :
                                 <b>{{ total}}€</b>
                             </h1>
                             <div class="col-md-12 btn-group btn-group-lg" role="group">
@@ -112,6 +111,7 @@
                 </div>
             </main>
         {% endif %}
+
     {% endblock %}
 
 {% endblock %}

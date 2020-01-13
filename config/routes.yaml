@@ -81,7 +81,7 @@ panier_vider:
 
 
 usager_accueil:
-    path : /{_locale}/user/accueil
+    path : /{_locale}/usager/accueil
     controller: App\Controller\UsagerController::index
     requirements:
         _locale: '%app.supported_locales%'
@@ -89,7 +89,7 @@ usager_accueil:
         _locale: fr
 
 usager_inscription:
-    path : /{_locale}/user/inscription
+    path : /{_locale}/usager/inscription
     controller: App\Controller\UsagerController::new
     requirements:
         _locale: '%app.supported_locales%'
@@ -98,7 +98,7 @@ usager_inscription:
 
 
 panier_validation:
-    path : /{_locale}/commande
+    path : /{_locale}/usager/commande
     controller: App\Controller\PanierController:validation
     requirements:
         _locale: '%app.supported_locales%'

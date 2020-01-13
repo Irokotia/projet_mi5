@@ -6,6 +6,9 @@
         {% include"navbar.html.twig" %}
     {% endblock %}
     {% block div %}
+        {% if app.user %}
+            <p>Nom de l’usager : {{ app.user.nom }}</p>
+        {% endif %}
         <main role="main" class="container">
             <div class="main-div">
                 <!-- debut du block content !-->
@@ -15,7 +18,7 @@
                     </div>
                 </div>
                 <div>
-                    Date de la commande : {{ commande.datecommande | date('d/m/Y H:I') }}
+                    Date de la commande : {{ commande.datecommande | date('d/m/Y H:i:s') }}
                 </div>
                 <!-- fin du block content !-->
             </div>
