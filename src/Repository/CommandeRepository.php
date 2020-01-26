@@ -47,4 +47,14 @@ class CommandeRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findAllCommmandeByUserId($idusager)
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.usager = :idusager')
+            ->setParameter('idusager', $idusager)
+            ->orderBy('c.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
 }

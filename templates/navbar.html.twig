@@ -9,7 +9,7 @@
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
                 <a class="nav-link" href="{{ path('boutique')}}">
-                    <i class="fas fa-store"></i> {% trans %}Boutique {% endtrans %}
+                    <i class="fas fa-store"></i> {% trans %}Boutique{% endtrans %}
                 </a>
             </li>
             <li class="nav-item">
@@ -26,19 +26,19 @@
             </li>
             <li class="nav-item dropdown">
                 <span class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-user"></i> {% trans %} Connexion {% endtrans %}
+                                            <i class="fas fa-user"></i> {% if app.user %}{{ app.user.prenom}}{% else %}{% trans %} Connexion {% endtrans %}{% endif %}
                                     </span>
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
-                    <a class="dropdown-item {% if app.user %}disabled{% else %}{% endif %}" href="">
+                    <a class="dropdown-item {% if app.user %}disabled{% else %}{% endif %}" href="{{ path('app_login') }}">
                         {% trans %} Connexion {% endtrans %}
                     </a>
-                    <a class="dropdown-item {% if app.user %}disabled {% else %} {% endif %} " href="{{ path('usager_inscription') }}">
+                    <a class="dropdown-item {% if app.user %}disabled{% else %}{% endif %}" href="{{ path('usager_inscription') }}">
                         {% trans %} Inscription {% endtrans %}
                     </a>
                     <a class="dropdown-item {% if app.user %} {% else %}disabled {% endif %}" href="{{ path('usager_accueil') }}">
                         {% trans %} Mon Compte {% endtrans %}
                     </a>
-                    <a class="dropdown-item {% if app.user %} {% else %}disabled {% endif %}" href="">
+                    <a class="dropdown-item {% if app.user %} {% else %}disabled {% endif %}" href="{{ path('list_commande_usager') }}">
                         {% trans %} Mes Commandes {% endtrans %}
                     </a>
                     <a class="dropdown-item {% if app.user %} {% else %}disabled {% endif %}" href="{{ path('app_logout') }}">
@@ -59,8 +59,8 @@
             </button>
         </form>
         <ul class="navbar-nav lang-menu">
-            <li class="nav-item"><a class="nav-link" href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': 'fr'})) }}">Francais</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{  path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': 'en'}))}}">English</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': 'fr'})) }}"><img src="{{ asset('images/fr.png') }}" alt=""></a></li>
+            <li class="nav-item"><a class="nav-link" href="{{  path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': 'en'}))}}"><img src="{{ asset('images/en.png') }}" alt=""></a></li>
         </ul>
     </div>
 </nav>

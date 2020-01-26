@@ -1,0 +1,20 @@
+<div class="card">
+    <div class="card-header text-center">
+        <h4>{% trans %}Top ventes{% endtrans %}</h4>
+    </div>
+    <div class="card-body">
+        <ul class="list-group">
+            {% set i = 0 %}
+            {% for ventes in topventes %}
+                <a href="{{ path('rayon', { 'idCategorie': produits[i].categorie.id }) }}">
+                    <li class="list-group-item text-center clickable">
+                        <img src="{{ asset(produits[i].visuel) }}" style="height: 40px;">
+                        <p class="small">{{ produits[i].libelle }}<br><i>{{ ventes.quantite }} {% trans %}ventes{% endtrans %}</i></p>
+                    </li>
+                </a>
+                {% set i = i + 1 %}
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+

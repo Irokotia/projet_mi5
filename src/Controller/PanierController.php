@@ -54,10 +54,21 @@ class PanierController extends AbstractController
     }
 
 
-    public function validation(PanierService $panierService,EntityManagerInterface $entityManager){
+    public function validation(PanierService $panierService,EntityManagerInterface $entityManager, \Swift_Mailer $mailer){
 
         $user = $this->getUser();
         $commande = $panierService->panierToCommande($user,$entityManager);
+
+
+        $message = (new \Swift_Message('Hello Email'))
+            ->setFrom('biobon@biobon.com')
+            ->setTo($user->getEmail())
+            ->setBody('You should see me from the profiler!')
+        ;
+
+        // ne marche pas du coup j'ai pas continuer
+
+        $mailer->send($message);
 
         return $this->render('commande.html.twig',array(
             'panier' => $panierService->getContenu(),

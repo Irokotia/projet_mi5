@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Commande;
+use App\Entity\LigneCommande;
 use App\Entity\Usager;
 use App\Form\UsagerType;
+use App\Repository\CommandeRepository;
 use App\Repository\UsagerRepository;
 use App\Service\PanierService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,14 +22,18 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class UsagerController extends AbstractController
 {
     const ID_USAGER_SESSION = 'idusager'; // Le nom de la variable d'usager de session
-    public function index(UsagerRepository $usagerRepository): Response
+    public function index(UsagerRepository $usagerRepository, CommandeRepository $commandeRepository): Response
     {
-
+        $this->get('session')->set(self::ID_USAGER_SESSION,$this->getUser()->getId());
         $idUsager = $this->get('session')->get(self::ID_USAGER_SESSION,'');
 
+        $nbCommandesbyUser = $commandeRepository->findBy(array(
+            'usager' => $idUsager
+        ));
         return $this->render('usager/index.html.twig', [
             'usager' => $usagerRepository->findOneBy(array(
-                'id' => $idUsager))
+                'id' => $idUsager)),
+            'nbCommandes' => $nbCommandesbyUser
         ]);
     }
     public function new(Request $request, SessionInterface $session, UserPasswordEncoderInterface
@@ -52,6 +59,18 @@ class UsagerController extends AbstractController
         return $this->render('usager/new.html.twig', [
             'usager' => $usager,
             'form' => $form->createView()
+        ]);
+    }
+
+    public function commandes(){
+        $database = $this->getDoctrine()->getManager();
+        $idUsager = $this->get('session')->get(self::ID_USAGER_SESSION,'');
+
+        $commandes = $database->getRepository(Commande::class)->findAllCommmandeByUserId($idUsager);
+        $coutcommandes = $database->getRepository(LigneCommande::class)->getSommeProduitByCommandes();
+        return $this->render('commandes.html.twig', [
+            'commandes' => $commandes,
+            'coutcommandes' => $coutcommandes
         ]);
     }
 }

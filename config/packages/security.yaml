@@ -35,5 +35,5 @@ security:
 
     encoders:
         App\Entity\Usager:
-            algorithm: bcrypt
+            algorithm: auto
 

@@ -2,13 +2,9 @@
 
 {% block title %}New Usager{% endblock %}
 
-{% block body %}
+{% block main %}
     {% block navbar %}
         {% include"navbar.html.twig" %}
     {% endblock %}
-    {% block div %}
-        <h1>Create new Usager</h1>
         {{ include('usager/_form.html.twig') }}
-    {% endblock %}
-
 {% endblock %}

@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Captcha\Bundle\CaptchaBundle\Form\Type\CaptchaType;
 
 class UsagerType extends AbstractType
 {
@@ -18,6 +19,9 @@ class UsagerType extends AbstractType
             ->add('password',PasswordType::class)
             ->add('nom')
             ->add('prenom')
+            ->add('captchaCode', CaptchaType::class, array(
+             'captchaConfig' => 'ExampleCaptcha'
+            ));
         ;
     }
 

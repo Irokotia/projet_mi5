@@ -47,4 +47,34 @@ class LigneCommandeRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function getSommeProduitByCommandes(){
+        return $this->createQueryBuilder('l')
+            ->groupBy('l.commande')
+            ->orderBy('l.commande','DESC')
+            ->select('l.id,(l.commande) as commande,SUM(l.prix) as prix')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function getTopVentes(){
+        $entityManager = $this->getEntityManager();
+
+        $qb = $this->createQueryBuilder('o');
+
+        $qb->select('SUM(o.quantite) AS quantite')
+            ->groupBy('o.produit')
+            ->orderBy('quantite', 'DESC')
+            ->addSelect('(o.produit)','(o.id)')
+            ->setMaxResults(4);
+
+        /*$qb->select('SUM(o.quantite) AS quantite')
+            ->groupBy('o.produit')
+            ->addSelect('o.produit','o.id')
+            ->orderBy('o.quantite', 'DESC');*/
+        // ne marche pas récupére uniquement l'id du produit donc obliger de récupérer le produit entier avec son id
+
+        return $qb->getQuery()->getResult();
+    }
 }

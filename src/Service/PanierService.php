@@ -37,9 +37,11 @@ class PanierService
     public function getTotal(EntityManagerInterface $entityManager)
     {
         $total = 0.0;
-        foreach($this->session->get(self::PANIER_SESSION) as $key => $value ){
-            $produitobj = $entityManager->getRepository(Produit::class)->find($key);
-            $total += $value * $produitobj->getPrix();
+        if($this->session->get(self::PANIER_SESSION)) {
+            foreach ($this->session->get(self::PANIER_SESSION) as $key => $value) {
+                $produitobj = $entityManager->getRepository(Produit::class)->find($key);
+                $total += $value * $produitobj->getPrix();
+            }
         }
         return $total;
     }
@@ -47,8 +49,12 @@ class PanierService
     // getNbProduits renvoie le nombre de produits dans le panier
     public function getNbProduits()
     {
+        $nbProduits = 0;
         if(!empty($this->session->get(self::PANIER_SESSION))){
-            return count($this->session->get(self::PANIER_SESSION));
+            foreach($this->session->get(self::PANIER_SESSION) as $produit){
+                $nbProduits += $produit;
+            }
+            return $nbProduits;
         }else{
             return 0;
         }
@@ -102,7 +108,7 @@ class PanierService
         $commande = new Commande();
         if(count($this->session->get(self::PANIER_SESSION)) > 0){
             $commande->setDateCommande(new \DateTime());
-            $commande->setStatut("Fini");
+            $commande->setStatut("En cours");
             $commande->setUsager($usager);
             $entityManager->persist($commande);
             $entityManager->flush();

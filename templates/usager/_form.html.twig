@@ -1,21 +1,52 @@
-{{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+<div class="card col-md-5">
+    <div class="card-header">
+        <h3>{% trans %}Nouveau Membre{% endtrans %} : {% trans %}Inscription{% endtrans %}</h3>
+    </div>
+    <div class="card-body">
+        {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
         {# Les erreurs générales du formulaire. #}
-        {{ form_errors(form) }}
-        {# email #}
-        {{ form_label(form.email, "Email", {'label_attr': {'class': 'form-control-label'}}) }}
-        {{ form_widget(form.email,  {'attr': {'class': 'form-control'}}) }}
-        {{ form_errors(form.email) }}
-        {# password #}
-        {{ form_label(form.password, "Password", {'label_attr': {'class': 'form-control-label'}}) }}
-        {{ form_widget(form.password,  {'attr': {'class': 'form-control'}}) }}
-        {{ form_errors(form.password) }}
-        {# nom #}
-        {{ form_label(form.nom, "Nom", {'label_attr': {'class': 'form-control-label'}}) }}
-        {{ form_widget(form.nom,  {'attr': {'class': 'form-control'}}) }}
-        {{ form_errors(form.nom) }}
-        {# prenom #}
-        {{ form_label(form.prenom, "Prenom", {'label_attr': {'class': 'form-control-label'}}) }}
-        {{ form_widget(form.prenom,  {'attr': {'class': 'form-control'}}) }}
-        {{ form_errors(form.prenom) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+        {% set formsErrors = form.vars.errors.form.getErrors(true) %}
+        {% if formsErrors|length %}
+            <div class="alert alert-danger">
+                <ul>
+                    {% for error in formsErrors %}
+                        <li>{{ error.message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        <div id="usager">
+            <div class="form-group">
+                {# email #}
+                {{ form_label(form.email, "Email", {'label_attr': {'class': 'form-control-label'}}) }}
+                {{ form_widget(form.email,  {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.email) }}
+            </div>
+            <div class="form-group">
+                {# password #}
+                {{ form_label(form.password, "Password", {'label_attr': {'class': 'form-control-label'}}) }}
+                {{ form_widget(form.password,  {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.password) }}
+            </div>
+            <div class="form-group">
+                {# nom #}
+                {{ form_label(form.nom, "Nom", {'label_attr': {'class': 'form-control-label'}}) }}
+                {{ form_widget(form.nom,  {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.nom) }}
+            </div>
+            <div class="form-group">
+                {# prenom #}
+                {{ form_label(form.prenom, "Prenom", {'label_attr': {'class': 'form-control-label'}}) }}
+                {{ form_widget(form.prenom,  {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.prenom) }}
+            </div>
+            <div class="form-group">
+                <link type="text/css" rel="stylesheet"
+                      href="../captcha-handler?get=bdc-layout-stylesheet.css">
+                {{ form_widget(form.captchaCode,  {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <button class="btn btn-lg btn-primary">{{ button_label|default('Inscription') }}</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>

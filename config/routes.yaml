@@ -106,3 +106,16 @@ panier_validation:
         _locale: fr
 
 
+captcha_routing:
+    resource: "@CaptchaBundle/Resources/config/routing.yml"
+
+
+list_commande_usager:
+    path: /{_locale}/usager/commandes
+    controller: App\Controller\UsagerController:commandes
+    requirements:
+        _locale: '%app.supported_locales%'
+    defaults:
+        _locale: fr
+
+

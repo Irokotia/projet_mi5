@@ -9,7 +9,28 @@
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+            <div  role="main" class="container-fluid">
+                {% block body %}
+                    <div class="row">
+                        <div class=" col-md-10">
+
+                            {% block main %} {% endblock %}
+
+                        </div> <!-- main -->
+                        <div class=" col-md-2" style="padding: 10px">
+                            {% block sidebar %}
+                                {{ render(controller('App\\Controller\\DefaultController::topVente')) }}
+                            {% endblock %} {# sidebar #}
+                        </div> <!-- sidebar -->
+                    </div> <!-- row -->
+
+                {% endblock %} {# body #}
+
+            </div> <!-- container-fluid -->
+            ...
+
+
+
         {% block javascripts %}
             <script
                     src="https://code.jquery.com/jquery-3.4.1.slim.js"

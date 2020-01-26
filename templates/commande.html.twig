@@ -1,15 +1,13 @@
-{# templates/contact.html.twig #}
+{# templates/commande.html.twig #}
 {% extends "base.html.twig" %}
 
-{% block body %}
+{% block main %}
     {% block navbar %}
         {% include"navbar.html.twig" %}
     {% endblock %}
-    {% block div %}
         {% if app.user %}
             <p>Nom de l’usager : {{ app.user.nom }}</p>
         {% endif %}
-        <main role="main" class="container">
             <div class="main-div">
                 <!-- debut du block content !-->
                 <div class="row">
@@ -22,6 +20,4 @@
                 </div>
                 <!-- fin du block content !-->
             </div>
-        </main>
-    {% endblock %}
 {% endblock %}
